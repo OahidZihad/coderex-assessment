@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useUsers from '../../Hooks/useUsers';
 import Loader from '../../Utils/Loader';
+import UserRow from './UserRow';
 
 const UserList = () => {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ const UserList = () => {
     <div className='container mx-auto my-10'>
       <h1 className='font-bold text-center text-3xl mb-5'>All Users List</h1>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table w-10/12 mx-auto">
           <thead>
             <tr>
               <th>SL</th>
@@ -28,12 +29,7 @@ const UserList = () => {
           </thead>
           <tbody>
             {users?.users.map((user, index) => (
-              <tr className='hover cursor-pointer' onClick={()=>handleUser(user?.id)}>
-                <th>{index + 1}</th>
-                <td>{user?.firstName} {user?.lastName}</td>
-                <td>{user?.email}</td>
-                <td>{user?.company?.name}</td>
-              </tr>
+              <UserRow user={user} index={index} handleUser={handleUser} />
             ))}
           </tbody>
         </table>
