@@ -1,6 +1,4 @@
-# Setup the Project
-
-## Commands
+## Commands for Setup the Project
 
 1. Open your terminal and then type:
       ### `git clone 'github repository link'`
