@@ -1,25 +1,43 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useUsers from '../../Hooks/useUsers';
+import Loader from '../../Utils/Loader';
 
 const UserList = () => {
-  const { users, loading, error } = useUsers();
+  const navigate = useNavigate()
+  const { users, loading } = useUsers();
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  const handleUser = (id) =>{
+    navigate(`/users/${id}`)
+  }
+
+  if (loading) return <Loader />;
 
   return (
-    <div>
-      <h1>User List</h1>
-      <ul>
-        {users?.users.map(user => (
-          <li key={user.id}>
-            <Link to={`/users/${user.id}`}>
-              {user.firstName} {user.lastName} - {user.email} - {user.company.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className='container mx-auto my-10'>
+      <h1 className='font-bold text-center text-3xl mb-5'>All Users List</h1>
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Company</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users?.users.map((user, index) => (
+              <tr className='hover cursor-pointer' onClick={()=>handleUser(user?.id)}>
+                <th>{index + 1}</th>
+                <td>{user?.firstName} {user?.lastName}</td>
+                <td>{user?.email}</td>
+                <td>{user?.company?.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
